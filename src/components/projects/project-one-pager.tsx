@@ -124,6 +124,8 @@ export default function ProjectOnePager({ project }: ProjectOnePagerProps) {
                       return "Auth & Collaboration";
                     case "dataFormats":
                       return "Data Formats";
+                    case "HPCtools":
+                      return "HPC Tools";
                     default:
                       return key
                         .replace(/([A-Z])/g, " $1")
