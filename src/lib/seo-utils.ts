@@ -63,7 +63,7 @@ export function generateOrganizationStructuredData() {
       "url": "https://ssecenter.cc.gatech.edu/contact/"
     },
     "sameAs": [
-      "https://github.com/gt-sse-center",
+      "https://github.com/gt-csse",
       "https://ssecenter.cc.gatech.edu/"
     ]
   };

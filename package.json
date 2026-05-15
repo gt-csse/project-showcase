@@ -2,7 +2,7 @@
   "name": "csse-showcase",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://gt-sse-center.github.io/project-showcase",
+  "homepage": "https://gt-csse.github.io/project-showcase",
   "type": "module",
   "scripts": {
     "dev": "vite",
