@@ -33,7 +33,7 @@ export default function Footer() {
                 href="https://linkedin.com/school/georgia-institute-of-technology/"
                 icon={faLinkedin}
               />
-              <SocialLink href="https://github.com/gt-sse-center" icon={faGithub} />
+              <SocialLink href="https://github.com/gt-csse" icon={faGithub} />
               <SocialLink href="https://www.youtube.com/user/GeorgiaTech" icon={faYoutube} />
             </div>
           </div>

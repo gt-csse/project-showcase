@@ -119,7 +119,7 @@ export const projects: Project[] = [
       "Enterprise-ready natural language image search solution for iNaturalist's 450M+ image dataset with scalable ETL pipeline and benchmarking framework",
     imageUrl: imgInatInq,
     category: ["ai-ml", "environmental-science"],
-    githubUrls: ["https://github.com/gt-sse-center/iNatInq/"],
+    githubUrls: ["https://github.com/inaturalist/Inquire-vector-search"],
     demoUrl: [],
     featured: false,
     achievements: [
@@ -1028,7 +1028,7 @@ export const projects: Project[] = [
       "Intelligent writing assistant that recognizes behavioral patterns and serves as a research platform for studying cognitive behavior through digital text interaction",
     imageUrl: imgCoAuthorScreenshot,
     category: ["ai-ml", "human-computer-interaction"],
-    githubUrls: ["https://github.com/gt-sse-center/coauthor-interface"],
+    githubUrls: ["https://github.com/yang-qian/thought-toolkit"],
     demoUrl: ["https://coauthor.stanford.edu/"],
     featured: false,
     achievements: [
@@ -1277,7 +1277,7 @@ export const projects: Project[] = [
       "BOINC integration for distributed mathematical computation enabling volunteer computing for integer relation discovery",
     imageUrl: imgLirec,
     category: ["data-science", "computational-science"],
-    githubUrls: ["https://github.com/gt-sse-center/LIReC"],
+    githubUrls: ["https://github.com/RamanujanMachine/LIReC"],
     demoUrl: [],
     featured: false,
     achievements: [
@@ -1342,7 +1342,7 @@ export const projects: Project[] = [
           url: "https://github.com/features/actions",
         },
       ],
-      apis: [{ name: "LIReC", url: "https://github.com/gt-sse-center/LIReC" }],
+      apis: [{ name: "LIReC", url: "https://github.com/RamanujanMachine/LIReC" }],
     },
     references: [
       'H. R. P. Ferguson, D. H. Bailey, and S. Arno, "Analysis of PSLQ, an integer relation finding algorithm," Mathematics of Computation, vol. 68, no. 225, pp. 351–369, 1999.',
@@ -1358,7 +1358,7 @@ export const projects: Project[] = [
       "Open-source web platform for AI-assisted satellite image annotation, modernized with comprehensive testing, CI/CD, and a redesigned interface",
     imageUrl: imgIrisThumbnail,
     category: ["ai-ml", "earth-atmospheric-sciences"],
-    githubUrls: ["https://github.com/gt-sse-center/iris"],
+    githubUrls: ["https://github.com/gt-csse/iris"],
     demoUrl: [],
     featured: false,
     achievements: [
