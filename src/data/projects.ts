@@ -1613,9 +1613,13 @@ import { ProjectSchema } from "@/schema";
     });
   }
 
-  const ids = projects.map((p) => p.id);
-  const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
-  if (duplicateIds.length) {
-    console.error("🛑 Duplicate project IDs detected:", [...new Set(duplicateIds)]);
+  const seenIds = new Set<number>();
+  const duplicateIds = new Set<number>();
+  projects.forEach((p) => {
+    if (seenIds.has(p.id)) duplicateIds.add(p.id);
+    else seenIds.add(p.id);
+  });
+  if (duplicateIds.size) {
+    console.error("🛑 Duplicate project IDs detected:", [...duplicateIds]);
   }
 })();
