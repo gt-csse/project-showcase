@@ -41,153 +41,6 @@ import imgGalileo0 from '/project-images/galileo_0.jpeg';
 // Projects data extracted from the Georgia Tech CSSE website
 export const projects: Project[] = [
   {
-  id: 17,
-  title: "d,α,β-CROWN: Distributed α,β-CROWN ",
-  description: "<p>Neural network verification is the process of ensuring that a neural network behaves as expected for all possible inputs, confirming properties like safety, security, and correctness. Verification is crucial for deploying neural networks in safety-critical applications, such as control systems, autonomous vehicles, robotics, and AI factories, by ensuring that they are safe from adversarial input-based attacks.</p><p>Among neural network verifiers, <a href='https://github.com/Verified-Intelligence/alpha-beta-CROWN' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>α,β-CROWN</a> is an award-winning, state-of-the-art software solution. In this project, we advance the state of neural network verification by transforming α,β-CROWN into a scalable, high-performance platform capable of handling modern deep learning models. By introducing asynchronous execution, multi-GPU, and multi-node parallelism, it becomes possible to verify significantly larger networks and input domains than previously feasible, in shorter timeframes. Some verification tasks have very large search spaces, which can only be fully explored in meaningful timeframes, leveraging a distributed scaled approach. This capability directly strengthens the reliability of machine learning systems deployed in safety-critical domains where guarantees of correctness are essential. Beyond performance gains, the integration of rigorous profiling, testing, and reproducibility practices elevates the tool from a research prototype into robust infrastructure, supporting broader adoption and accelerating research in trustworthy AI.</p><p>The project addressed several fundamental challenges in α,β-CROWN. Existing workflows were previously constrained by the sequential execution of the computationally expensive branch-and-bound (BaB) operation and by underutilized hardware and scalability. To overcome these limitations, the project introduced architectural improvements that reduced Python-level bottlenecks and enabled asynchronous CPU–GPU pipeline coordination using Ray framework. The work also tackled the challenges of scaling across multiple GPUs and distributed nodes, leading to near-linear speed ups. In addition, the resulting codebase incorporates stronger software engineering practices, including improved testing and documentation while preserving compatibility with ongoing research workflows.</p>",
-  summary: "Distributed and scalable implementation of α,β-CROWN for neural network verification using Ray",
-  imageUrl: imgageabCrown,
-  category: ["ai-ml", "data-science"],
-  githubUrls: ["https://github.com/Verified-Intelligence/alpha-beta-CROWN"],
-  demoUrl: [],
-  featured: false,
-  achievements: [
-    "Delivered a multi-node, multi-GPU version of BaB implementations using Ray in the α,β-CROWN repository with a single node single GPU performance of at least ~90%+ of existing PIs previous code base.",
-    "Exceeded scale out performance ratio goal of 4:3 on multi-node, multi-gpu infrastructure by demonstrating 4:3.8 (ReLU BaB) and 4:3.9 (Input BaB) scale out performance ratios on provided benchmark jobs. "
-  ],
-  goals: [
-    "Enable pipeline decoupling and asynchronous execution to evaluate the feasibility of parallelizing the α,β-CROWN stack across distributed GPU infrastructure. ",
-    "Achieve multi-GPU, multi-node scaling with a target scale out performance improvement ratio of at least 4:3, e.g., adding 8 GPUs must lead to at least 6x faster performance. ",
-    "Ensure all new software is well-tested, documented and delivered to PI repository. "
-  ],
-  softwareSolution: "<p>We evaluated several parallelization frameworks compatible with the Python-based α,β-CROWN stack and selected <a href='https://docs.ray.io/en/latest/index.html' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>Ray</a> due to its strong support for pipeline abstractions, actor-based execution, seamless scaling from single-node to multi-node environments, and production readiness. Using Ray, we reimplemented both types of BaB (ReLU and Input), the primary bottleneck in the verification workflow. This effort exposed data-level constraints in the existing codebase that prevented clean pipeline decoupling and asynchronous execution. In collaboration with the PIs, we addressed these limitations, which subsequently revealed deeper transport-level constraints in the underlying stack, particularly the lack of efficient GPU-to-GPU communication support (e.g., RDMA/RDT integration for CUDA workloads). Based on these findings, we determined that system-level scaling would provide more immediate impact than further pipeline decoupling given current ecosystem limitations.</p> <p> To achieve scalable performance, we extended the Ray-based implementation to distribute the BaB workload across multiple GPUs within a node and across multiple nodes. This change revealed an additional bottleneck: reliance on a centralized global task queue that constrained parallel execution. To address it, we designed a hierarchical task management approach that maintains a global task pool at the cluster level while allowing each GPU to operate primarily on a local task queue, synchronizing only when necessary. This design reduced contention and enabled near-linear scaling, exceeding the target 4:3 scale out performance ratio across both variants of the BaB algorithm.</p> <p> We also developed a streamlined execution harness that allows distributed α,β-CROWN to be run with a single command on any <a href='https://slurm.schedmd.com/overview.html' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>SLURM</a>-enabled cluster, enabling consistent profiling and benchmarking throughout the project. All implementations were documented, validated with the PIs, and passed all CI tests.</p>",
-  impact: [
-    "During our collaboration, we uncovered and resolved implicit scheduling and data structure assumptions in the α,β-CROWN implementation that limited scaling of key benchmark test cases. ",
-    "Completion of this project enables PIs to leverage multi-node multi-GPU infrastructure to tackle larger unsolved problems, which were previously untenable on single GPU deployments. "
-  ],
-  detailedTechnologies: {
-    programming: [
-      { name: "Python", url: "https://www.python.org/" }
-    ],
-    frameworks: [
-      { name: "Ray", url: "https://docs.ray.io/en/latest/ray-core/walkthrough.html" },
-      { name: "CUDA", url: "https://docs.nvidia.com/cuda/" }
-    ],
-    hpcTools: [
-      { name: "Slurm", url: "https://slurm.schedmd.com/documentation.html" },
-      { name: "NSight", url: "https://developer.nvidia.com/nsight-systems" }
-    ],
-  },
-  projectDetails: {
-    startDate: "December 2025",
-    endDate: "April 2026",
-    source: "VISS",
-    scientificDomain: "AI/ML, Neural Network Verification",
-    partners: [
-      { name: "Huan Zhang", profileUrl: "https://www.huan-zhang.com/" }
-    ],
-    softwareEngineers: [
-      { name: "Robert Bates", profileUrl: "https://www.linkedin.com/in/arpieb/" },
-      { name: "Ketan Bhardwaj", profileUrl: "https://www.linkedin.com/in/ketanbj/" },
-      { name: "Mathieu Tanneau", profileUrl: "https://www.linkedin.com/in/mtanneau/" }
-    ]
-  },
-  screenshots: [
-        {
-      url: imgageabCrownPerf1,
-      alt: "",
-      caption: "Performance comparison (no. of domains visited) of the distributed α,β-CROWN implementation against the existing single GPU implementation varying the number of GPUs and number of nodes used for an unsolved ReLU BaB job",
-      description: ""
-    },
-    {
-      url: imgageabCrownPerf2,
-      alt: "",
-      caption: "Performance comparison (no. of domains visited) of the distributed α,β-CROWN implementation against the existing single GPU implementation varying the number of GPUs and number of nodes used for an unsolved input BaB job",
-      description: ""
-    }
-  ],
-  references: [],
-  metrics: [
-    { label: "Multi-node, multi-gpu scale out performance ratio (Target: 4:3)", value: "Achieved: 4:3.8+" },
-  ]
-},
-  {
-    id: 15,
-    title: "iNat x INQUIRE",
-    description:
-      "Advances in multi-modal machine learning, especially vision-language models, have the potential to transform ecological research and drive new scientific discoveries by enabling practitioners to efficiently search and process large-scale repositories of natural world images. In particular, the ability to search a large, living database of natural observations using natural language-based queries, combined with spatial and taxonomy-based filtering, would unlock significant value to the scientific and naturalist communities. In this partnership, we explored what it would take to integrate natural language search functionality into the <a href='https://www.inaturalist.org/' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>iNaturalist</a> platform. iNaturalist is a non-profit organization that hosts the largest living dataset of natural world observations (450M observations in August 2025), which is curated by a community of millions of users. Previous collaboration between Dr. Sara Beery and iNaturalist led to the development of <a href='http://inquire-demo.csail.mit.edu/' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>INQUIRE search</a>, which allows users to search over a static subset of the iNaturalist dataset using natural language queries. Early usage of INQUIRE search by ecologists has demonstrated the scientific value of introducing new modalities of data collection, which unlocks new approaches to answering scientific questions. Throughout the course of this partnership, we developed a large-scale data ingestion pipeline and search engine, ready for integration into the iNaturalist platform to bring text-based search capabilities to over 8M active users. In addition, we provide a detailed cost breakdown and benchmarking tool to help stakeholders find the most cost-effective integration strategy.",
-    summary:
-      "Enterprise-ready natural language image search solution for iNaturalist's 450M+ image dataset with scalable ETL pipeline and benchmarking framework",
-    imageUrl: imgInatInq,
-    category: ["ai-ml", "environmental-science"],
-    githubUrls: ["https://github.com/inaturalist/Inquire-vector-search"],
-    demoUrl: [],
-    featured: false,
-    achievements: [
-      "Built an ETL pipeline to embed 4.8M images and load them into a vector database within 20 hours. This pipeline is designed to scale to the full iNaturalist dataset (450M images), with an expected runtime of ~1 day using GPUs for embedding computation",
-      "Developed a scalable, production-ready search engine supporting natural language queries over 4.8M images, achieving sub-200 ms latency",
-      "Implemented a configuration-driven system architecture that decouples infrastructure dependencies, enabling flexible deployment across hybrid cloud and local environments",
-      "Created a benchmarking framework to evaluate embedding models (e.g., <a href='https://openai.com/research/clip' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>CLIP</a>, <a href='https://arxiv.org/abs/2303.15343' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>SigLip</a>) and vector database backends using key search metrics, including <a href='https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)#Mean_average_precision' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>mAP</a>, <a href='https://en.wikipedia.org/wiki/Discounted_cumulative_gain' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>NDCG</a>, <a href='https://en.wikipedia.org/wiki/Mean_reciprocal_rank' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>MRR</a>, <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>precision</a>, and <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>recall</a>",
-      "Built CI/CD pipelines to automate unit and integration testing, as well as deployment of the search service to Azure",
-      "Delivered a detailed report analyzing cost and performance trade-offs across models and hosting strategies, covering datasets up to 4.8M images and projected estimates for 450M+ images.",
-      "Provided iNaturalist with tiered cost estimates to clarify how different budget levels impact system capabilities and scalability",
-    ],
-    goals: [
-      "To provide iNaturalist with an enterprise ready natural language image search solution that can be deployed to all 8M active iNaturalist users over their full 450M image dataset",
-      "To allow stakeholders to better understand the cost-performance trade-offs associated with the various options for hosting a natural language-based search service on iNaturalist so more informed decisions can be made about cost-effective ways to introduce such functionality into iNaturalist.",
-      "To build out a production-ready ETL pipeline capable of reliably processing the full 450M image iNaturalist dataset",
-    ],
-    softwareSolution:
-      "During the engagement, we developed iNatInq, a software tool that enables users to search large collections of images using natural language descriptions. For example, a user can type \"bird perched on a branch\" or \"tiger crossing a busy city street\", and the system returns the most visually relevant results, ranked by similarity. To support integration with iNaturalist's existing ecosystem, the tool includes a scalable ingestion pipeline that converts existing image data into a searchable format, a production-grade search API for retrieving results, and a configuration-driven architecture that allows teams to switch between underlying technologies and models without code changes, making it easy to benchmark alternatives and select the best approach based on metrics such as <a href='https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)#Mean_average_precision' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>mAP</a>, <a href='https://en.wikipedia.org/wiki/Discounted_cumulative_gain' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>NDCG</a>, <a href='https://en.wikipedia.org/wiki/Mean_reciprocal_rank' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>MRR</a>, <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>precision</a> and <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>recall</a>. The system is an enterprise-grade, fault-tolerant solution designed to handle the scale of iNaturalist's full dataset (450M+ images). To support this, the software uses an architecture that enables horizontal scaling in a cloud environment. For resilience, it incorporates <a href='https://en.wikipedia.org/wiki/Dead_letter_queue' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>dead-letter queues</a> to capture and retry failed processing jobs, as well as <a href='https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>circuit breaker patterns</a> to prevent cascading service failures, combined with retries using backoff, structured error coding, and built-in metric tracking for visibility into system health and performance. Additionally, we implement <a href='https://en.wikipedia.org/wiki/Change_data_capture' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>Change Data Capture (CDC)</a> to ensure the search service remains up to date with changes to iNaturalist image data. The codebase is supported by a comprehensive testing suite, including unit, integration, and end-to-end tests, and CI/CD pipelines that automate test execution and deploy the search service directly to the cloud.",
-    impact: [
-      "Equipped iNaturalist stakeholders with a detailed cost breakdown, enabling informed planning for hosting the service at full dataset scale and integrating it into the production codebase",
-      "Enabled a high-performance search experience that returns relevant results across 4.8M images with sub-200 ms latency",
-      "Delivered benchmarking insights on quantization methods, helping stakeholders understand trade-offs between model performance and cost. Further research is set to follow on the impact of quantization in vision-language models",
-      "Delivered a production-grade benchmarking framework that enables rapid swapping and evaluation of embedding models and vector backends, allowing researchers to efficiently measure and optimize natural language search performance on the <a href='https://github.com/inquire-benchmark/INQUIRE/tree/main/data' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>INQUIRE dataset</a>.",
-      "Enabled an automated, self-healing ingestion and search pipeline at scale, unlocking new opportunities for large-scale data collection and empowering teams to explore and answer previously infeasible research questions.",
-    ],
-    detailedTechnologies: {
-      cloud: [
-        { name: "Azure", url: "https://azure.microsoft.com/" },
-      ],
-      vectorDatabases: [
-        { name: "Qdrant", url: "https://qdrant.tech/" },
-        { name: "Weaviate", url: "https://weaviate.io/" },
-      ],
-      dataProcessing: [
-        { name: "Ray", url: "https://www.ray.io/" },
-        { name: "Databricks", url: "https://www.databricks.com/" },
-      ],
-      backend: [
-        { name: "FastAPI", url: "https://fastapi.tiangolo.com/" },
-      ],
-      infrastructure: [
-        { name: "MinIO", url: "https://min.io/" },
-        { name: "Docker", url: "https://www.docker.com/" },
-        { name: "Redis", url: "https://redis.io/" },
-        { name: "Prometheus", url: "https://prometheus.io/" },
-      ],
-    },
-    projectDetails: {
-      startDate: "September 2025",
-      endDate: "April 2026",
-      source: "VISS",
-      scientificDomain: "Environmental Science",
-      partners: [
-        { name: "Sara Beery (Principal Investigator)", profileUrl: "https://www.linkedin.com/in/sara-beery-1ba89166/" },
-        { name: "iNaturalist Team", profileUrl: "https://www.inaturalist.org/pages/team" },
-      ],
-      softwareEngineers: [
-        { name: "Alex Djalali", profileUrl: "https://www.linkedin.com/in/alex-djalali-272502273/" },
-        { name: "Ketan Bhardwaj", profileUrl: "https://www.linkedin.com/in/ketanbj/" },
-        { name: "Varun Narayan", profileUrl: "https://www.linkedin.com/in/varun-n/" },
-        { name: "Austin Weeks", profileUrl: "https://www.linkedin.com/in/austinweeks/" },
-        { name: "Jeremy Garcia", profileUrl: "https://www.linkedin.com/in/jeremygarcia23/" },
-        { name: "Varun Agarwal", profileUrl: "" },
-      ],
-    },
-    screenshots: [],
-  },
-  {
     id: 1,
     title: "PatientX.AI",
     description:
@@ -1350,6 +1203,83 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: 15,
+    title: "iNat x INQUIRE",
+    description:
+      "Advances in multi-modal machine learning, especially vision-language models, have the potential to transform ecological research and drive new scientific discoveries by enabling practitioners to efficiently search and process large-scale repositories of natural world images. In particular, the ability to search a large, living database of natural observations using natural language-based queries, combined with spatial and taxonomy-based filtering, would unlock significant value to the scientific and naturalist communities. In this partnership, we explored what it would take to integrate natural language search functionality into the <a href='https://www.inaturalist.org/' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>iNaturalist</a> platform. iNaturalist is a non-profit organization that hosts the largest living dataset of natural world observations (450M observations in August 2025), which is curated by a community of millions of users. Previous collaboration between Dr. Sara Beery and iNaturalist led to the development of <a href='http://inquire-demo.csail.mit.edu/' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>INQUIRE search</a>, which allows users to search over a static subset of the iNaturalist dataset using natural language queries. Early usage of INQUIRE search by ecologists has demonstrated the scientific value of introducing new modalities of data collection, which unlocks new approaches to answering scientific questions. Throughout the course of this partnership, we developed a large-scale data ingestion pipeline and search engine, ready for integration into the iNaturalist platform to bring text-based search capabilities to over 8M active users. In addition, we provide a detailed cost breakdown and benchmarking tool to help stakeholders find the most cost-effective integration strategy.",
+    summary:
+      "Enterprise-ready natural language image search solution for iNaturalist's 450M+ image dataset with scalable ETL pipeline and benchmarking framework",
+    imageUrl: imgInatInq,
+    category: ["ai-ml", "environmental-science"],
+    githubUrls: ["https://github.com/inaturalist/Inquire-vector-search"],
+    demoUrl: [],
+    featured: false,
+    achievements: [
+      "Built an ETL pipeline to embed 4.8M images and load them into a vector database within 20 hours. This pipeline is designed to scale to the full iNaturalist dataset (450M images), with an expected runtime of ~1 day using GPUs for embedding computation",
+      "Developed a scalable, production-ready search engine supporting natural language queries over 4.8M images, achieving sub-200 ms latency",
+      "Implemented a configuration-driven system architecture that decouples infrastructure dependencies, enabling flexible deployment across hybrid cloud and local environments",
+      "Created a benchmarking framework to evaluate embedding models (e.g., <a href='https://openai.com/research/clip' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>CLIP</a>, <a href='https://arxiv.org/abs/2303.15343' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>SigLip</a>) and vector database backends using key search metrics, including <a href='https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)#Mean_average_precision' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>mAP</a>, <a href='https://en.wikipedia.org/wiki/Discounted_cumulative_gain' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>NDCG</a>, <a href='https://en.wikipedia.org/wiki/Mean_reciprocal_rank' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>MRR</a>, <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>precision</a>, and <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>recall</a>",
+      "Built CI/CD pipelines to automate unit and integration testing, as well as deployment of the search service to Azure",
+      "Delivered a detailed report analyzing cost and performance trade-offs across models and hosting strategies, covering datasets up to 4.8M images and projected estimates for 450M+ images.",
+      "Provided iNaturalist with tiered cost estimates to clarify how different budget levels impact system capabilities and scalability",
+    ],
+    goals: [
+      "To provide iNaturalist with an enterprise ready natural language image search solution that can be deployed to all 8M active iNaturalist users over their full 450M image dataset",
+      "To allow stakeholders to better understand the cost-performance trade-offs associated with the various options for hosting a natural language-based search service on iNaturalist so more informed decisions can be made about cost-effective ways to introduce such functionality into iNaturalist.",
+      "To build out a production-ready ETL pipeline capable of reliably processing the full 450M image iNaturalist dataset",
+    ],
+    softwareSolution:
+      "During the engagement, we developed iNatInq, a software tool that enables users to search large collections of images using natural language descriptions. For example, a user can type \"bird perched on a branch\" or \"tiger crossing a busy city street\", and the system returns the most visually relevant results, ranked by similarity. To support integration with iNaturalist's existing ecosystem, the tool includes a scalable ingestion pipeline that converts existing image data into a searchable format, a production-grade search API for retrieving results, and a configuration-driven architecture that allows teams to switch between underlying technologies and models without code changes, making it easy to benchmark alternatives and select the best approach based on metrics such as <a href='https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)#Mean_average_precision' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>mAP</a>, <a href='https://en.wikipedia.org/wiki/Discounted_cumulative_gain' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>NDCG</a>, <a href='https://en.wikipedia.org/wiki/Mean_reciprocal_rank' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>MRR</a>, <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>precision</a> and <a href='https://en.wikipedia.org/wiki/Precision_and_recall' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>recall</a>. The system is an enterprise-grade, fault-tolerant solution designed to handle the scale of iNaturalist's full dataset (450M+ images). To support this, the software uses an architecture that enables horizontal scaling in a cloud environment. For resilience, it incorporates <a href='https://en.wikipedia.org/wiki/Dead_letter_queue' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>dead-letter queues</a> to capture and retry failed processing jobs, as well as <a href='https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>circuit breaker patterns</a> to prevent cascading service failures, combined with retries using backoff, structured error coding, and built-in metric tracking for visibility into system health and performance. Additionally, we implement <a href='https://en.wikipedia.org/wiki/Change_data_capture' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>Change Data Capture (CDC)</a> to ensure the search service remains up to date with changes to iNaturalist image data. The codebase is supported by a comprehensive testing suite, including unit, integration, and end-to-end tests, and CI/CD pipelines that automate test execution and deploy the search service directly to the cloud.",
+    impact: [
+      "Equipped iNaturalist stakeholders with a detailed cost breakdown, enabling informed planning for hosting the service at full dataset scale and integrating it into the production codebase",
+      "Enabled a high-performance search experience that returns relevant results across 4.8M images with sub-200 ms latency",
+      "Delivered benchmarking insights on quantization methods, helping stakeholders understand trade-offs between model performance and cost. Further research is set to follow on the impact of quantization in vision-language models",
+      "Delivered a production-grade benchmarking framework that enables rapid swapping and evaluation of embedding models and vector backends, allowing researchers to efficiently measure and optimize natural language search performance on the <a href='https://github.com/inquire-benchmark/INQUIRE/tree/main/data' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>INQUIRE dataset</a>.",
+      "Enabled an automated, self-healing ingestion and search pipeline at scale, unlocking new opportunities for large-scale data collection and empowering teams to explore and answer previously infeasible research questions.",
+    ],
+    detailedTechnologies: {
+      cloud: [
+        { name: "Azure", url: "https://azure.microsoft.com/" },
+      ],
+      vectorDatabases: [
+        { name: "Qdrant", url: "https://qdrant.tech/" },
+        { name: "Weaviate", url: "https://weaviate.io/" },
+      ],
+      dataProcessing: [
+        { name: "Ray", url: "https://www.ray.io/" },
+        { name: "Databricks", url: "https://www.databricks.com/" },
+      ],
+      backend: [
+        { name: "FastAPI", url: "https://fastapi.tiangolo.com/" },
+      ],
+      infrastructure: [
+        { name: "MinIO", url: "https://min.io/" },
+        { name: "Docker", url: "https://www.docker.com/" },
+        { name: "Redis", url: "https://redis.io/" },
+        { name: "Prometheus", url: "https://prometheus.io/" },
+      ],
+    },
+    projectDetails: {
+      startDate: "September 2025",
+      endDate: "April 2026",
+      source: "VISS",
+      scientificDomain: "Environmental Science",
+      partners: [
+        { name: "Sara Beery (Principal Investigator)", profileUrl: "https://www.linkedin.com/in/sara-beery-1ba89166/" },
+        { name: "iNaturalist Team", profileUrl: "https://www.inaturalist.org/pages/team" },
+      ],
+      softwareEngineers: [
+        { name: "Alex Djalali", profileUrl: "https://www.linkedin.com/in/alex-djalali-272502273/" },
+        { name: "Ketan Bhardwaj", profileUrl: "https://www.linkedin.com/in/ketanbj/" },
+        { name: "Varun Narayan", profileUrl: "https://www.linkedin.com/in/varun-n/" },
+        { name: "Austin Weeks", profileUrl: "https://www.linkedin.com/in/austinweeks/" },
+        { name: "Jeremy Garcia", profileUrl: "https://www.linkedin.com/in/jeremygarcia23/" },
+        { name: "Varun Agarwal", profileUrl: "" },
+      ],
+    },
+    screenshots: [],
+  },
+  {
     id: 16,
     title: "IRIS: Intelligently Reinforced Image Segmentation",
     description:
@@ -1596,6 +1526,76 @@ export const projects: Project[] = [
       { label: "Interactive Marimo GUI", value: "1 application (~2,200 lines)" },
       { label: "Contribution period", value: "December 2025 to April 2026 (~5 months)" },
     ],
+  },
+  {
+    id: 18,
+    title: "d,α,β-CROWN: Distributed α,β-CROWN ",
+    description: "<p>Neural network verification is the process of ensuring that a neural network behaves as expected for all possible inputs, confirming properties like safety, security, and correctness. Verification is crucial for deploying neural networks in safety-critical applications, such as control systems, autonomous vehicles, robotics, and AI factories, by ensuring that they are safe from adversarial input-based attacks.</p><p>Among neural network verifiers, <a href='https://github.com/Verified-Intelligence/alpha-beta-CROWN' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>α,β-CROWN</a> is an award-winning, state-of-the-art software solution. In this project, we advance the state of neural network verification by transforming α,β-CROWN into a scalable, high-performance platform capable of handling modern deep learning models. By introducing asynchronous execution, multi-GPU, and multi-node parallelism, it becomes possible to verify significantly larger networks and input domains than previously feasible, in shorter timeframes. Some verification tasks have very large search spaces, which can only be fully explored in meaningful timeframes, leveraging a distributed scaled approach. This capability directly strengthens the reliability of machine learning systems deployed in safety-critical domains where guarantees of correctness are essential. Beyond performance gains, the integration of rigorous profiling, testing, and reproducibility practices elevates the tool from a research prototype into robust infrastructure, supporting broader adoption and accelerating research in trustworthy AI.</p><p>The project addressed several fundamental challenges in α,β-CROWN. Existing workflows were previously constrained by the sequential execution of the computationally expensive branch-and-bound (BaB) operation and by underutilized hardware and scalability. To overcome these limitations, the project introduced architectural improvements that reduced Python-level bottlenecks and enabled asynchronous CPU–GPU pipeline coordination using Ray framework. The work also tackled the challenges of scaling across multiple GPUs and distributed nodes, leading to near-linear speed ups. In addition, the resulting codebase incorporates stronger software engineering practices, including improved testing and documentation while preserving compatibility with ongoing research workflows.</p>",
+    summary: "Distributed and scalable implementation of α,β-CROWN for neural network verification using Ray",
+    imageUrl: imgageabCrown,
+    category: ["ai-ml", "data-science"],
+    githubUrls: ["https://github.com/Verified-Intelligence/alpha-beta-CROWN"],
+    demoUrl: [],
+    featured: false,
+    achievements: [
+      "Delivered a multi-node, multi-GPU version of BaB implementations using Ray in the α,β-CROWN repository with a single node single GPU performance of at least ~90%+ of existing PIs previous code base.",
+      "Exceeded scale out performance ratio goal of 4:3 on multi-node, multi-gpu infrastructure by demonstrating 4:3.8 (ReLU BaB) and 4:3.9 (Input BaB) scale out performance ratios on provided benchmark jobs. "
+    ],
+    goals: [
+      "Enable pipeline decoupling and asynchronous execution to evaluate the feasibility of parallelizing the α,β-CROWN stack across distributed GPU infrastructure. ",
+      "Achieve multi-GPU, multi-node scaling with a target scale out performance improvement ratio of at least 4:3, e.g., adding 8 GPUs must lead to at least 6x faster performance. ",
+      "Ensure all new software is well-tested, documented and delivered to PI repository. "
+    ],
+    softwareSolution: "<p>We evaluated several parallelization frameworks compatible with the Python-based α,β-CROWN stack and selected <a href='https://docs.ray.io/en/latest/index.html' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>Ray</a> due to its strong support for pipeline abstractions, actor-based execution, seamless scaling from single-node to multi-node environments, and production readiness. Using Ray, we reimplemented both types of BaB (ReLU and Input), the primary bottleneck in the verification workflow. This effort exposed data-level constraints in the existing codebase that prevented clean pipeline decoupling and asynchronous execution. In collaboration with the PIs, we addressed these limitations, which subsequently revealed deeper transport-level constraints in the underlying stack, particularly the lack of efficient GPU-to-GPU communication support (e.g., RDMA/RDT integration for CUDA workloads). Based on these findings, we determined that system-level scaling would provide more immediate impact than further pipeline decoupling given current ecosystem limitations.</p> <p> To achieve scalable performance, we extended the Ray-based implementation to distribute the BaB workload across multiple GPUs within a node and across multiple nodes. This change revealed an additional bottleneck: reliance on a centralized global task queue that constrained parallel execution. To address it, we designed a hierarchical task management approach that maintains a global task pool at the cluster level while allowing each GPU to operate primarily on a local task queue, synchronizing only when necessary. This design reduced contention and enabled near-linear scaling, exceeding the target 4:3 scale out performance ratio across both variants of the BaB algorithm.</p> <p> We also developed a streamlined execution harness that allows distributed α,β-CROWN to be run with a single command on any <a href='https://slurm.schedmd.com/overview.html' target='_blank' rel='noopener noreferrer' class='text-[var(--gt-navy)] hover:text-[var(--gt-gold)] underline'>SLURM</a>-enabled cluster, enabling consistent profiling and benchmarking throughout the project. All implementations were documented, validated with the PIs, and passed all CI tests.</p>",
+    impact: [
+      "During our collaboration, we uncovered and resolved implicit scheduling and data structure assumptions in the α,β-CROWN implementation that limited scaling of key benchmark test cases. ",
+      "Completion of this project enables PIs to leverage multi-node multi-GPU infrastructure to tackle larger unsolved problems, which were previously untenable on single GPU deployments. "
+    ],
+    detailedTechnologies: {
+      programming: [
+        { name: "Python", url: "https://www.python.org/" }
+      ],
+      frameworks: [
+        { name: "Ray", url: "https://docs.ray.io/en/latest/ray-core/walkthrough.html" },
+        { name: "CUDA", url: "https://docs.nvidia.com/cuda/" }
+      ],
+      hpcTools: [
+        { name: "Slurm", url: "https://slurm.schedmd.com/documentation.html" },
+        { name: "NSight", url: "https://developer.nvidia.com/nsight-systems" }
+      ],
+    },
+    projectDetails: {
+      startDate: "December 2025",
+      endDate: "April 2026",
+      source: "VISS",
+      scientificDomain: "AI/ML, Neural Network Verification",
+      partners: [
+        { name: "Huan Zhang", profileUrl: "https://www.huan-zhang.com/" }
+      ],
+      softwareEngineers: [
+        { name: "Robert Bates", profileUrl: "https://www.linkedin.com/in/arpieb/" },
+        { name: "Ketan Bhardwaj", profileUrl: "https://www.linkedin.com/in/ketanbj/" },
+        { name: "Mathieu Tanneau", profileUrl: "https://www.linkedin.com/in/mtanneau/" }
+      ]
+    },
+    screenshots: [
+          {
+        url: imgageabCrownPerf1,
+        alt: "",
+        caption: "Performance comparison (no. of domains visited) of the distributed α,β-CROWN implementation against the existing single GPU implementation varying the number of GPUs and number of nodes used for an unsolved ReLU BaB job",
+        description: ""
+      },
+      {
+        url: imgageabCrownPerf2,
+        alt: "",
+        caption: "Performance comparison (no. of domains visited) of the distributed α,β-CROWN implementation against the existing single GPU implementation varying the number of GPUs and number of nodes used for an unsolved input BaB job",
+        description: ""
+      }
+    ],
+    references: [],
+    metrics: [
+      { label: "Multi-node, multi-gpu scale out performance ratio (Target: 4:3)", value: "Achieved: 4:3.8+" },
+    ]
   },
 ];
 
