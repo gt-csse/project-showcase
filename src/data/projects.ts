@@ -1612,4 +1612,10 @@ import { ProjectSchema } from "@/schema";
       console.error(r.error.issues);
     });
   }
+
+  const ids = projects.map((p) => p.id);
+  const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
+  if (duplicateIds.length) {
+    console.error("🛑 Duplicate project IDs detected:", [...new Set(duplicateIds)]);
+  }
 })();
