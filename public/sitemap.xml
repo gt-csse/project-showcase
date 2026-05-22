@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ssec-showcase.gatech.edu/</loc>
+    <loc>https://gt-csse.github.io/project-showcase</loc>
     <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -98,25 +98,25 @@
   </url>
   <url>
     <loc>https://ssec-showcase.gatech.edu/projects/15</loc>
-    <lastmod>2024-01-23</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ssec-showcase.gatech.edu/projects/16</loc>
-    <lastmod>2024-01-23</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ssec-showcase.gatech.edu/projects/17</loc>
-    <lastmod>2024-01-23</lastmod>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ssec-showcase.gatech.edu/projects/18</loc>
-    <lastmod>2024-01-23</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
